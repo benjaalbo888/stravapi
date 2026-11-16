@@ -47,5 +47,6 @@
     "@esbuild-kit/core-utils": {
       "esbuild": "0.28.2"
     }
-  }
+  },
+  "license": "MIT"
 }

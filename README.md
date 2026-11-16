@@ -200,3 +200,7 @@ Ejecuta las migraciones y el seed contra la nueva base. Valida la preview con `/
 - Idempotencia de movimientos mediante una referencia única aportada por el cliente.
 - ETag y caché HTTP para lecturas de alto volumen.
 - Búsqueda con índice trigram si aumenta el tamaño del catálogo.
+
+## Licencia
+
+[MIT](LICENSE)
