@@ -1,10 +1,12 @@
-import { buildApp } from './application.js';
+import Fastify from 'fastify';
+import { configureApp, serverOptions } from './application.js';
 import { readConfig } from './config.js';
 import { connectDatabase } from './db/client.js';
 
 const config = readConfig();
 const { db, close } = connectDatabase(config.databaseUrl);
-const app = buildApp({ ...config, db });
+const app = Fastify(serverOptions(config.logLevel));
+configureApp(app, { ...config, db });
 app.addHook('onClose', close);
 
 if (!config.vercel) {

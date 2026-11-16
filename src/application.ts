@@ -6,6 +6,7 @@ import swaggerUi from '@fastify/swagger-ui';
 import { Ajv } from 'ajv';
 import * as formats from 'ajv-formats';
 import Fastify, { LogController } from 'fastify';
+import type { FastifyInstance, FastifyServerOptions } from 'fastify';
 import { catalogService } from './catalog.js';
 import type { Database } from './db/client.js';
 import { ApiError, setupErrors } from './errors.js';
@@ -31,10 +32,10 @@ const health = { success: true, data: { status: 'ok' } };
 const require = createRequire(import.meta.url);
 const instrumentSans = readFileSync(require.resolve('@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2'));
 
-export function buildApp(options: Options) {
-  const app = Fastify({
-    logger: options.logLevel ? {
-      level: options.logLevel,
+export function serverOptions(logLevel?: string): FastifyServerOptions {
+  return {
+    logger: logLevel ? {
+      level: logLevel,
       redact: ['req.headers.authorization', 'req.headers.cookie', 'res.headers["set-cookie"]'],
     } : false,
     logController: new LogController({ disableRequestLogging: true }),
@@ -42,7 +43,14 @@ export function buildApp(options: Options) {
     ajv: { customOptions: { removeAdditional: false } },
     onProtoPoisoning: 'error',
     onConstructorPoisoning: 'error',
-  });
+  };
+}
+
+export function buildApp(options: Options) {
+  return configureApp(Fastify(serverOptions(options.logLevel)), options);
+}
+
+export function configureApp(app: FastifyInstance, options: Options) {
   const catalog = catalogService(options.db);
   setupErrors(app);
 
