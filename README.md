@@ -2,7 +2,7 @@
 
 **Datos listos para construir.** StravAPI es una API REST en español con un catálogo ficticio para tiendas de demostración, ejercicios de frontend, dashboards y aplicaciones de inventario. El seed incluye **84 productos en 6 categorías**, con precios y existencias realistas. Las consultas GET son públicas y las escrituras requieren una clave administrativa.
 
-**Estado del servicio.** La aplicación y Swagger UI se pueden ejecutar localmente. Las URLs públicas de la API y de la referencia quedan pendientes de un despliegue verificado con una base Supabase dedicada.
+**En producción.** StravAPI está desplegada en Vercel con una base Supabase dedicada y 84 productos ficticios. [Portada](https://stravapi.vercel.app/) · [Catálogo JSON](https://stravapi.vercel.app/api/v1/products?limit=5) · [Swagger UI](https://stravapi.vercel.app/docs) · [OpenAPI](https://stravapi.vercel.app/openapi.json)
 
 ## Portada y referencia interactiva
 
