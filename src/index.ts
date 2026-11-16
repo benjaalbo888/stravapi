@@ -1,3 +1,4 @@
+import type { IncomingMessage, ServerResponse } from 'node:http';
 import Fastify from 'fastify';
 import { configureApp, serverOptions } from './application.js';
 import { readConfig } from './config.js';
@@ -15,9 +16,13 @@ if (!config.vercel) {
       void app.close().catch(() => { process.exitCode = 1; });
     });
   }
+  app.listen({ port: config.port, host: '0.0.0.0' }).catch(() => {
+    app.log.fatal({ event: 'listen_failed' }, 'No se pudo iniciar StravAPI');
+    process.exitCode = 1;
+  });
 }
 
-app.listen({ port: config.port, host: '0.0.0.0' }).catch(() => {
-  app.log.fatal({ event: 'listen_failed' }, 'No se pudo iniciar StravAPI');
-  process.exitCode = 1;
-});
+export default async function handler(request: IncomingMessage, response: ServerResponse) {
+  await app.ready();
+  app.server.emit('request', request, response);
+}
