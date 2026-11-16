@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'node:url';
+
 function databaseUrl(value: string | undefined) {
   try {
     const url = new URL(value ?? '');
@@ -14,6 +16,11 @@ export function requireDatabaseUrl(value = process.env.DATABASE_URL) {
   if (!local) {
     url.searchParams.delete('uselibpqcompat');
     url.searchParams.set('sslmode', 'verify-full');
+    const supabaseHost = /^(?:aws-\d+-[a-z0-9-]+\.pooler\.supabase\.com|db\.[a-z0-9]+\.supabase\.co)$/;
+    if (supabaseHost.test(url.hostname) && !url.searchParams.has('sslrootcert')) {
+      const certificate = new URL('../certificates/supabase-prod-ca-2021.crt', import.meta.url);
+      url.searchParams.set('sslrootcert', fileURLToPath(certificate));
+    }
   }
   return url.href;
 }

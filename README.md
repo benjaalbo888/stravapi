@@ -139,7 +139,7 @@ Genera el cuerpo de un movimiento con `productId`, `type`, `quantity` y `referen
 ## PostgreSQL o Supabase
 
 1. Crea una base dedicada para StravAPI. En Supabase, mantén `stravapi` fuera de los esquemas expuestos por la Data API.
-2. Copia `.env.example` a `.env` y completa las variables. En Supabase, copia las conexiones desde **Connect**. Usa **Transaction pooler** para `DATABASE_URL` y **Session pooler** para `MIGRATION_DATABASE_URL`. El código requiere TLS con verificación de identidad para DB remotas.
+2. Copia `.env.example` a `.env` y completa las variables. En Supabase, copia las conexiones desde **Connect**. Usa **Transaction pooler** para `DATABASE_URL` y **Session pooler** para `MIGRATION_DATABASE_URL`. Las conexiones remotas requieren TLS con verificación de identidad. La aplicación incluye la CA pública de Supabase y permite indicar otra ruta mediante `sslrootcert` en la URL. [Configuración TLS de Supabase](https://supabase.com/docs/guides/platform/ssl-enforcement)
 3. Ejecuta `npm run db:migrate`, `npm run db:seed` y `npm run dev`.
 4. Comprueba `/ready` y `/api/v1/stats` antes de usar el catálogo.
 
