@@ -16,6 +16,7 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build
+      - run: node --no-experimental-require-module dist/application.js
       - run: npm audit --audit-level=moderate
   postgres:
     runs-on: ubuntu-latest

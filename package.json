@@ -46,6 +46,9 @@
   "overrides": {
     "@esbuild-kit/core-utils": {
       "esbuild": "0.28.2"
+    },
+    "@fastify/static": {
+      "content-disposition": "2.0.1"
     }
   },
   "license": "MIT"
